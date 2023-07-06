@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const fetchUsers = createAsyncThunk(
     'users/fetchUsers',
-    //async ({ rejectWithValue }) => {
-    async () => {
+    async (name,thunkAPI) => {
         try {
             const response = await fetch('https://randomuser.me/api/?results=5');
             const data = await response.json();
@@ -11,8 +10,7 @@ export const fetchUsers = createAsyncThunk(
             return data.results;
         } catch (error) {
             console.log("--------------! Error", error);
-            //return rejectWithValue(error.response.data);
-            return error;
+            return thunkAPI.rejectWithValue("Something went wrong...!");
         }
     }
 )
